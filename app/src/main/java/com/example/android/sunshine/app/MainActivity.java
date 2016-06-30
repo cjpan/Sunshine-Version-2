@@ -56,6 +56,8 @@ public class MainActivity extends ActionBarActivity {
      */
     public static class PlaceholderFragment extends Fragment {
 
+        ArrayAdapter<String> mforcastAdapter;
+
         public PlaceholderFragment() {
         }
 
@@ -76,7 +78,7 @@ public class MainActivity extends ActionBarActivity {
             };
             List<String> weekForecast = new ArrayList<String>(Arrays.asList(data));
 
-            ArrayAdapter<String> mforcastAdapter = new ArrayAdapter<String>(
+            mforcastAdapter = new ArrayAdapter<String>(
                     getActivity(), // The current context (this fragment's parent activity)
                     R.layout.list_item_forecast, // ID of list item layout
                     R.id.list_item_forecast_textview, // ID of the textview to populate
