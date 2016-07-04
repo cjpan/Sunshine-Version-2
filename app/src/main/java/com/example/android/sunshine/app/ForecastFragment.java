@@ -59,7 +59,7 @@ public class ForecastFragment extends Fragment {
 //            Intent refreshIntent = new Intent(getApplicationContext(), FetchWeatherTask.class);
 //            startActivity(refreshIntent);
             FetchWeatherTask weatherTask = new FetchWeatherTask();
-            weatherTask.execute();
+            weatherTask.execute("Shanghai");
             return true;
         }
 
@@ -96,14 +96,12 @@ public class ForecastFragment extends Fragment {
         return rootView;
     }
 
-
-
-    public class FetchWeatherTask extends AsyncTask<Void, Void, Void> {
+    public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
 
         private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
 
         @Override
-        protected Void doInBackground(Void... params) {
+        protected Void doInBackground(String... params) {
             // These two need to be declared outside try/catch
             // so that they can be closed in the finally block.
             HttpURLConnection urlConnection = null;
@@ -116,12 +114,22 @@ public class ForecastFragment extends Fragment {
                 // Construct the URL for the OpenWeatherMap query
                 // Possible parameters are available at OWM's forecast API page, at
                 // http://openweathermap.org/API#forecast
-                URL url = new URL("http://api.openweathermap.org/data/2.5/" +
-                        "forecast/daily?" +
-                        "id=1796236" +
-                        "&APPID=c00311d137c02b83f849b5c6cadcc36c" +
-                        "&cnt=7" +
-                        "&units=metric");
+//                URL url = new URL("http://api.openweathermap.org/data/2.5/" +
+//                        "forecast/daily?" +
+//                        "id=1796236" +
+//                        "&APPID=c00311d137c02b83f849b5c6cadcc36c" +
+//                        "&cnt=7" +
+//                        "&units=metric");
+
+                final String FORECAST_BASE_URL =
+                        "http://api.openweathermap.org/data/2.5/forecast/daily?";
+                final String QUERY_PARAM = "q";
+                final String FORMAT_PARAM = "mode";
+                final String UNITS_PARAM = "units";
+                final String DAYS_PARAM = "cnt";
+                final String APPID_PARAM = "APPID";
+
+                
 
                 // Create the request to OWM and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();
