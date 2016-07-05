@@ -36,7 +36,7 @@ import java.util.List;
  */
 public class ForecastFragment extends Fragment {
 
-    private ArrayAdapter<String> mforcastAdapter;
+    private ArrayAdapter<String> mForcastAdapter;
 
     public ForecastFragment() {
     }
@@ -88,7 +88,7 @@ public class ForecastFragment extends Fragment {
         };
         List<String> weekForecast = new ArrayList<String>(Arrays.asList(data));
 
-        mforcastAdapter = new ArrayAdapter<String>(
+        mForcastAdapter = new ArrayAdapter<String>(
                 getActivity(), // The current context (this fragment's parent activity)
                 R.layout.list_item_forecast, // ID of list item layout
                 R.id.list_item_forecast_textview, // ID of the textview to populate
@@ -98,7 +98,7 @@ public class ForecastFragment extends Fragment {
 
         // Get a reference to the ListView, and attach this adaptor to the list view
         ListView listView = (ListView)rootView.findViewById(R.id.listview_forecast);
-        listView.setAdapter(mforcastAdapter);
+        listView.setAdapter(mForcastAdapter);
 
         return rootView;
     }
@@ -301,6 +301,17 @@ public class ForecastFragment extends Fragment {
 
             // This will only happen if there was an error getting or parsing the forecast.
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(String[] result) {
+            if (result != null) {
+                mForcastAdapter.clear();
+                for (String dayForecast :  result) {
+                    mForcastAdapter.add(dayForecast);
+                }
+                // new data is from server
+            }
         }
     }
 }
