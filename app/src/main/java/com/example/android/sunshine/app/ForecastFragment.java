@@ -1,9 +1,11 @@
 package com.example.android.sunshine.app;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.text.format.Time;
 import android.util.Log;
@@ -32,6 +34,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.prefs.PreferenceChangeListener;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -68,7 +71,11 @@ public class ForecastFragment extends Fragment {
 //            Intent refreshIntent = new Intent(getApplicationContext(), FetchWeatherTask.class);
 //            startActivity(refreshIntent);
             FetchWeatherTask weatherTask = new FetchWeatherTask();
-            weatherTask.execute("Sapporo");
+
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            String location = prefs.getString(getString(R.string.pref_location_name),
+                    getString(R.string.pref_location_default));
+            weatherTask.execute(location);
             return true;
         }
 
